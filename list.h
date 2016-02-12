@@ -81,7 +81,9 @@ template<class Element> class List {
         { for (int i = 0; i < NumElements(); i++)
              Nth(i)->Print(indentLevel, label); }
              
-
+    Element back(){  //TODO added
+        return elems.back();
+    } 
 };
 
 #endif
