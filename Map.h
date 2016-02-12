@@ -3,14 +3,12 @@
 
 #include <string>
 #include <map>
-#include "ast_decl.h"
-//#include "errors.h"
+//#include "ast.h"
+//#include "ast_decl.h"
+#include "errors.h"
 #include "list.h"
 
 using namespace std;
-
-class Decl;
-class Identifier;
 
 class Map{
     protected:

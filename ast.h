@@ -41,13 +41,11 @@
 #include "location.h"
 #include <iostream>
 #include "Map.h"
-
 using namespace std;
-
 
 class Node  {
   public: 
-    static Map* symbolTable;
+    static Map *symbolTable;
 
   protected:
     yyltype *location;
