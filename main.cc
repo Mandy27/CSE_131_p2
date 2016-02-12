@@ -10,7 +10,6 @@
 #include "errors.h"
 #include "parser.h"
 
-
 /* Function: main()
  * ----------------
  * Entry point to the entire program.  We parse the command line and turn
@@ -19,6 +18,8 @@
  * InitParser() is used to set up the parser. The call to yyparse() will
  * attempt to parse a complete program from the input. 
  */
+
+
 int main(int argc, char *argv[])
 {
     ParseCommandLine(argc, argv);

@@ -24,7 +24,6 @@ void VarDecl::PrintChildren(int indentLevel) {
 }
 
 void VarDecl::Check(){
-  
 }
 
 FnDecl::FnDecl(Identifier *n, Type *r, List<VarDecl*> *d) : Decl(n) {
@@ -49,7 +48,7 @@ void FnDecl::Check(){ //TODO added
     if (formals){
     for (int i = 0; i < formals->NumElements(); i++)
       //formals->Nth(i)->Print(1, "formals"); 
-      printf("var: %s\n", formals->Nth(i));
+      printf("var: \n");//formals->Nth(i));
     }
     if(body){
      // body->Print(1,"hi");
