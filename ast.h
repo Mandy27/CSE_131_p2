@@ -40,13 +40,10 @@
 #include <stdlib.h>   // for NULL
 #include "location.h"
 #include <iostream>
-#include "Map.h"
 using namespace std;
 
-class Node  {
-  public: 
-    static Map *symbolTable;
 
+class Node  {
   protected:
     yyltype *location;
     Node *parent;

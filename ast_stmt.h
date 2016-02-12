@@ -15,6 +15,7 @@
 
 #include "list.h"
 #include "ast.h"
+#include "symbolTable.h"
 
 class Decl;
 class VarDecl;
@@ -33,6 +34,7 @@ class Program : public Node
      const char *GetPrintNameForNode() { return "Program"; }
      void PrintChildren(int indentLevel);
      void Check();
+     SymbolTable *table;
 };
 
 class Stmt : public Node
