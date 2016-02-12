@@ -28,15 +28,41 @@ void Program::Check() {
      *      and polymorphism in the node classes.
      */
     if ( decls->NumElements() >= 1 ) {
-      map<string, Decl*> *symbolTable;
+      List<map<string, Decl*>*> *list = new List<map<string,Decl*> *>();
+     //map<string, Decl*> *symbolTable = new map<string, Decl*>();
+     map<string, Decl*> *symbolTable = new map<string, Decl*>();
       for (int i = 0; i < decls->NumElements(); i++){
-
+        
+	//TODO new scope when '{'??
+        //map<string, Decl*> *symbolTable = new map<string, Decl*>();
         FnDecl *fn = dynamic_cast<FnDecl*> (decls->Nth(i));
-	if(fn) printf("\ntype FnDcl %s: \n", fn->getId().c_str());
-        VarDecl *var = dynamic_cast<VarDecl*> (decls->Nth(i));
-	if(var) printf("\ntype var\n");
+	if(fn) {
+	  printf("\ntype FnDcl %s: \n", fn->getId().c_str());
+          //if (fn->formals) fn->formals->PrintAll(1, "(formals) "); 
+          fn->Check();
+          
+  	  printf("\nend of FnDecl check\n");
+	}
+        
+	
+	VarDecl *var = dynamic_cast<VarDecl*> (decls->Nth(i));
+	if(var){
+	  printf("\ntype VarDcl %s: \n", var->getId().c_str());
+	  if(symbolTable->find(var->getId())->second)
+	    ReportError::DeclConflict(decls->Nth(i),symbolTable->find(var->getId())->second);
+	}
+	
+        symbolTable->insert(pair<string, Decl*> (decls->Nth(i)->getId(), decls->Nth(i)));
+	list->Append(symbolTable);
 
-	symbolTable->insert(pair<string, Decl*> (decls->Nth(i)->getId(), decls->Nth(i)));
+
+
+     
+      //for (int i = 0; i < list->NumElements(); i++)
+       // list->Nth(0)->find("main")->second->PrintChildren(1);
+	//symbolTable->find("x")->second->PrintChildren(1);
+
+
     }
 
    }

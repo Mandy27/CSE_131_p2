@@ -23,6 +23,9 @@ void VarDecl::PrintChildren(int indentLevel) {
    if (id) id->Print(indentLevel+1);
 }
 
+void VarDecl::Check(){
+  
+}
 
 FnDecl::FnDecl(Identifier *n, Type *r, List<VarDecl*> *d) : Decl(n) {
     Assert(n != NULL && r!= NULL && d != NULL);
@@ -42,4 +45,19 @@ void FnDecl::PrintChildren(int indentLevel) {
     if (body) body->Print(indentLevel+1, "(body) ");
 }
 
-
+void FnDecl::Check(){ //TODO added
+    if (formals){
+    for (int i = 0; i < formals->NumElements(); i++)
+      //formals->Nth(i)->Print(1, "formals"); 
+      printf("var: %s\n", formals->Nth(i));
+    }
+    if(body){
+     // body->Print(1,"hi");
+      StmtBlock* stmtblock = (StmtBlock*)  body;
+      //stmtblock->PrintChildren(1);
+      //if(!l) printf("list is null");
+    //for (int i = 0; i < l->NumElements(); i++)
+      //l->Nth(i)->Print(1, "formals"); 
+    }
+    //if (body) body->Print(1, "(body) ");
+}
