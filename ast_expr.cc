@@ -115,4 +115,7 @@ Call::Call(yyltype loc, Expr *b, Identifier *f, List<Expr*> *a) : Expr(loc)  {
     if (field) field->Print(indentLevel+1);
     if (actuals) actuals->PrintAll(indentLevel+1, "(actuals) ");
   }
- 
+
+void AssignExpr::Check(SymbolTable *table){
+  D("\n*****AssingExpr*********\n");
+}

@@ -79,7 +79,10 @@ void StmtBlock::Check(SymbolTable *table){
   for (int i = 0; i < stmts->NumElements(); i++){
     D("%d",i);
     stmts->Nth(i)->Check(table);
-    //stmts->Nth(i)->Print(1);
+    AssignExpr* a = dynamic_cast<AssignExpr*> (stmts->Nth(i));
+    EqualityExpr* e = dynamic_cast<EqualityExpr*> (stmts->Nth(i));
+    if(a) D("Ass");
+    if(e) D("Eq");
   }
   
   D("\nend stmtblock check\n");
