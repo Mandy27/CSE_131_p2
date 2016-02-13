@@ -28,6 +28,7 @@ void Program::Check() {
      *      checking itself, which makes for a great use of inheritance
      *      and polymorphism in the node classes.
      */
+    SymbolTable *table = new SymbolTable();
     if ( decls->NumElements() >= 1 ) {
       for (int i = 0; i < decls->NumElements(); i++){
           D("\n%s: \n", decls->Nth(i)->getId().c_str());
