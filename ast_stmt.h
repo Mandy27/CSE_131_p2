@@ -34,7 +34,7 @@ class Program : public Node
      const char *GetPrintNameForNode() { return "Program"; }
      void PrintChildren(int indentLevel);
      void Check();
-     SymbolTable *table;
+     //SymbolTable *table;
 };
 
 class Stmt : public Node
