@@ -37,32 +37,6 @@ void Program::Check() {
 	        //table->print();
       }
       }
-    /*    FnDecl *fn = dynamic_cast<FnDecl*> (decls->Nth(i));
-	if(fn) {
-	  printf("\ntype FnDcl %s: \n", fn->getId().c_str());
-          fn->Check();
-          
-  	  printf("\nend of FnDecl check\n");
-	  }
-        
-	
-	 VarDecl *var = dynamic_cast<VarDecl*> (decls->Nth(i));
-	 if(var){
-	   printf("\ntype VarDcl %s: \n", var->getId().c_str());
-	 }
-
-
-    }
-
-   }*/
-
-   /* // sample test - not the actual working code
-    // replace it with your own implementation
-    if ( decls->NumElements() >= 2 ) {
-      // Decl *newDecl  = decls->Nth(1);
-      // Decl *prevDecl = decls->Nth(0);
-      // ReportError::DeclConflict(newDecl, prevDecl);
-    }*/
 }
 
 void StmtBlock::Check(){
@@ -76,8 +50,8 @@ void StmtBlock::Check(){
   D("\nstmt list\n");
   for (int i = 0; i < stmts->NumElements(); i++){
     D("%d",i);
-    //stmts->Nth(i)->Check();
-    stmts->Nth(i)->Print(1);
+    stmts->Nth(i)->Check();
+    //stmts->Nth(i)->Print(1);
   }
 
   D("\nend stmtblock check\n");
@@ -85,7 +59,7 @@ void StmtBlock::Check(){
 void DeclStmt::Check(){
   D("\ndeclstmt check\n");
   D("%s",decl->getId().c_str());
-
+  table->insert(decl->getId(), decl);
 }
 StmtBlock::StmtBlock(List<VarDecl*> *d, List<Stmt*> *s) {
     Assert(d != NULL && s != NULL);

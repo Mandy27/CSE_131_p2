@@ -42,7 +42,7 @@
 #include <iostream>
 using namespace std;
 
-#define DEBUG 0
+#define DEBUG 1
 #define D(...) \
             do { if (DEBUG) fprintf(stderr, __VA_ARGS__); } while (0)
 
