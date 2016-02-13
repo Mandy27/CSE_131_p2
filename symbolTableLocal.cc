@@ -1,13 +1,13 @@
 #include "symbolTableLocal.h"
 
 void SymbolTableLocal::insert(string str, Decl* d){
-    printf("\nin symbollocal inserti\n");
+    /*printf("\nin symbollocal inserti\n");
     if(m->find(str)->second)
     {
       printf("\nFOUND");
       cout<<m->find(str)->second;
     } else print();
-
+    */
     if(lookup(str))
       ReportError::DeclConflict(d,m->find(str)->second);
 

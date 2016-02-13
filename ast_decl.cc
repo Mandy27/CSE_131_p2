@@ -24,7 +24,7 @@ void VarDecl::PrintChildren(int indentLevel) {
 }
 
 void VarDecl::Check(){
-  printf("\nIn VarDecl Check\n");
+  D("\nIn VarDecl Check\n");
 }
 
 FnDecl::FnDecl(Identifier *n, Type *r, List<VarDecl*> *d) : Decl(n) {

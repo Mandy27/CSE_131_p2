@@ -30,10 +30,11 @@ void Program::Check() {
      */
     if ( decls->NumElements() >= 1 ) {
       for (int i = 0; i < decls->NumElements(); i++){
-          printf("\n%s: \n", decls->Nth(i)->getId().c_str());
-	  decls->Nth(i)->Check();
+          D("\n%s: \n", decls->Nth(i)->getId().c_str());
           table->insert(decls->Nth(i)->getId(), decls->Nth(i));
-	  table->print();
+
+	        decls->Nth(i)->Check();
+	        //table->print();
       }
       }
     /*    FnDecl *fn = dynamic_cast<FnDecl*> (decls->Nth(i));
@@ -65,11 +66,26 @@ void Program::Check() {
 }
 
 void StmtBlock::Check(){
-  printf("\nstmtblock check\n");
-  for (int i = 0; i < decls->NumElements(); i++)
-    decls->Nth(i)->Print(1);
+  D("\nstmtblock check\n");
+  D("\nvar list\n");
 
-  printf("\nend stmtblock check\n");
+  for (int i = 0; i < decls->NumElements(); i++){
+    D("%d",i);
+    decls->Nth(i)->Print(1);
+  }
+  D("\nstmt list\n");
+  for (int i = 0; i < stmts->NumElements(); i++){
+    D("%d",i);
+    //stmts->Nth(i)->Check();
+    stmts->Nth(i)->Print(1);
+  }
+
+  D("\nend stmtblock check\n");
+}
+void DeclStmt::Check(){
+  D("\ndeclstmt check\n");
+  D("%s",decl->getId().c_str());
+
 }
 StmtBlock::StmtBlock(List<VarDecl*> *d, List<Stmt*> *s) {
     Assert(d != NULL && s != NULL);
