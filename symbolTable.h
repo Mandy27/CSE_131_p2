@@ -14,6 +14,8 @@ class SymbolTable{
    public:
         SymbolTable(){
             //list  = new vector<SymbolTableLocal*>();
+            SymbolTableLocal* temp = new SymbolTableLocal();
+            this->list.push_back(temp);
         }
         void insert(SymbolTableLocal *s);
         void insert(string str, Decl *d);

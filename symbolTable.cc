@@ -5,6 +5,7 @@ void SymbolTable::insert(SymbolTableLocal *s){
 }
 
 void SymbolTable::insert(string str, Decl* d){
+  //printf("\n size: %d\n",end());
   list[end()]->insert(str,d);
 }
 bool SymbolTable::lookup(string str){
@@ -12,7 +13,7 @@ bool SymbolTable::lookup(string str){
 }
 
 int SymbolTable::end(){
-  return list.size();
+  return (list.size()-1);
 }
 
 void SymbolTable::print(){

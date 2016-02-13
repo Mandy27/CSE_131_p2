@@ -30,9 +30,10 @@ void Program::Check() {
      */
     if ( decls->NumElements() >= 1 ) {
       for (int i = 0; i < decls->NumElements(); i++){
-          printf("\ntype FnDcl %s: \n", decls->Nth(i)->getId().c_str());
+          printf("\n%s: \n", decls->Nth(i)->getId().c_str());
+	  decls->Nth(i)->Check();
           table->insert(decls->Nth(i)->getId(), decls->Nth(i));
-          //table->print();
+	  table->print();
       }
       }
     /*    FnDecl *fn = dynamic_cast<FnDecl*> (decls->Nth(i));
@@ -63,6 +64,13 @@ void Program::Check() {
     }*/
 }
 
+void StmtBlock::Check(){
+  printf("\nstmtblock check\n");
+  for (int i = 0; i < decls->NumElements(); i++)
+    decls->Nth(i)->Print(1);
+
+  printf("\nend stmtblock check\n");
+}
 StmtBlock::StmtBlock(List<VarDecl*> *d, List<Stmt*> *s) {
     Assert(d != NULL && s != NULL);
     (decls=d)->SetParentAll(this);
