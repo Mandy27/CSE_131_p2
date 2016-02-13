@@ -28,19 +28,19 @@ void Program::Check() {
      *      checking itself, which makes for a great use of inheritance
      *      and polymorphism in the node classes.
      */
-    //SymbolTable *table = new SymbolTable();
+    SymbolTable *table = new SymbolTable();
     if ( decls->NumElements() >= 1 ) {
       for (int i = 0; i < decls->NumElements(); i++){
           D("\n%s: \n", decls->Nth(i)->getId().c_str());
           table->insert(decls->Nth(i)->getId(), decls->Nth(i));
 
-	        decls->Nth(i)->Check();
-	        //table->print();
+	  decls->Nth(i)->Check(table);
+	  //table->print();
       }
       }
 }
 
-void StmtBlock::Check(){
+void StmtBlock::Check(SymbolTable *table){
   D("\nstmtblock check\n");
   D("\nvar list\n");
 
@@ -51,17 +51,17 @@ void StmtBlock::Check(){
   D("\nstmt list\n");
   for (int i = 0; i < stmts->NumElements(); i++){
     D("%d",i);
-    stmts->Nth(i)->Check();
+    stmts->Nth(i)->Check(table);
     //stmts->Nth(i)->Print(1);
   }
 
   D("\nend stmtblock check\n");
 }
-void DeclStmt::Check(){
+void DeclStmt::Check(SymbolTable *table){
   D("\ndeclstmt check\n");
   D("%s",decl->getId().c_str());
+  table->insert(decl->getId(), decl);
   table->print();
-  //table->insert(decl->getId(), decl);
 }
 StmtBlock::StmtBlock(List<VarDecl*> *d, List<Stmt*> *s) {
     Assert(d != NULL && s != NULL);

@@ -68,7 +68,7 @@ class Node  {
     void Print(int indentLevel, const char *label = NULL); 
     virtual void PrintChildren(int indentLevel)  {}
 
-    virtual void Check(){}
+    virtual void Check(SymbolTable *table){}
     //SymbolTable *table;
 };
    
