@@ -19,6 +19,7 @@ class SymbolTable{
         }
         void insert(SymbolTableLocal *s);
         void insert(string str, Decl *d);
+        void newScope();
         bool lookup(string str);
         int end();
         

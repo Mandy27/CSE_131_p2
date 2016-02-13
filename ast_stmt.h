@@ -48,6 +48,7 @@ class StmtBlock : public Stmt
 {
   protected:
     List<VarDecl*> *decls;
+  public: //TODO added
     List<Stmt*> *stmts;
     
   public:
@@ -55,6 +56,7 @@ class StmtBlock : public Stmt
     const char *GetPrintNameForNode() { return "StmtBlock"; }
     void PrintChildren(int indentLevel);
     void Check(SymbolTable *table);
+    void Check(SymbolTable *table,List<VarDecl*>* formals);
 };
 
 class DeclStmt: public Stmt 

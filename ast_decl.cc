@@ -46,19 +46,8 @@ void FnDecl::PrintChildren(int indentLevel) {
 }
 
 void FnDecl::Check(SymbolTable *table){ //TODO added
-    printf("\nIn FnDecl check\n");
-    if (formals){
-    for (int i = 0; i < formals->NumElements(); i++)
-      formals->Nth(i)->Print(1, "formals"); 
-      //printf("var: \n");//formals->Nth(i));
-    }
-    if(body){
-      StmtBlock* stmtblock = (StmtBlock*)  body;
-      body->Check(table);
-      //stmtblock->PrintChildren(1);
-      //if(!l) printf("list is null");
-    //for (int i = 0; i < l->NumElements(); i++)
-      //l->Nth(i)->Print(1, "formals"); 
-    }
-    //if (body) body->Print(1, "(body) ");
+    D("\nIn FnDecl check\n");
+    
+    StmtBlock* stmtblock = (StmtBlock*)  body;
+    stmtblock->Check(table,formals); 
 }

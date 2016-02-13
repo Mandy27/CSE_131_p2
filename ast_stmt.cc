@@ -40,9 +40,18 @@ void Program::Check() {
       }
 }
 
-void StmtBlock::Check(SymbolTable *table){
-  D("\nstmtblock check\n");
-  D("\nvar list\n");
+void StmtBlock::Check(SymbolTable *table,List<VarDecl*>* formals){
+  D("\n*********STMTBLOCK with formals********** check\n");
+  table->newScope();
+
+  if (formals){
+    for (int i = 0; i < formals->NumElements(); i++){
+      D("\nvar: %s\n",formals->Nth(i)->getId().c_str());
+      table->insert(formals->Nth(i)->getId(),formals->Nth(i));
+      }
+  }
+  table->print();
+
 
   for (int i = 0; i < decls->NumElements(); i++){
     D("%d",i);
@@ -54,11 +63,30 @@ void StmtBlock::Check(SymbolTable *table){
     stmts->Nth(i)->Check(table);
     //stmts->Nth(i)->Print(1);
   }
-
+  
   D("\nend stmtblock check\n");
+  table->print();
+}
+void StmtBlock::Check(SymbolTable *table){
+  D("\n*********STMTBLOCK *********************** check\n");
+  D("\nvar list\n");
+  table->newScope();
+  for (int i = 0; i < decls->NumElements(); i++){
+    D("%d",i);
+    decls->Nth(i)->Print(1);
+  }
+  D("\nstmt list\n");
+  for (int i = 0; i < stmts->NumElements(); i++){
+    D("%d",i);
+    stmts->Nth(i)->Check(table);
+    //stmts->Nth(i)->Print(1);
+  }
+  
+  D("\nend stmtblock check\n");
+  table->print();
 }
 void DeclStmt::Check(SymbolTable *table){
-  D("\ndeclstmt check\n");
+  D("\nDeclstmt check\n");
   D("%s",decl->getId().c_str());
   table->insert(decl->getId(), decl);
   table->print();

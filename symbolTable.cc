@@ -17,5 +17,11 @@ int SymbolTable::end(){
 }
 
 void SymbolTable::print(){
+  printf("\ntable number: %d\n", end());
   list[end()]->print(); 
+}
+
+void SymbolTable::newScope(){
+  SymbolTableLocal *tmp = new SymbolTableLocal();
+  list.push_back(tmp);
 }

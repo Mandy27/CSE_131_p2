@@ -45,7 +45,7 @@ class SymbolTable;
 
 #define DEBUG 1
 #define D(...) \
-            do { if (DEBUG) fprintf(stderr, __VA_ARGS__); } while (0)
+            do { if (DEBUG) fprintf(stdout, __VA_ARGS__); } while (0)
 
 class Node  {
   protected:
