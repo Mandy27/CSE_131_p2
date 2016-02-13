@@ -30,25 +30,29 @@ void Program::Check() {
      */
     if ( decls->NumElements() >= 1 ) {
       for (int i = 0; i < decls->NumElements(); i++){
-        
-        FnDecl *fn = dynamic_cast<FnDecl*> (decls->Nth(i));
-	        if(fn) {
-	          printf("\ntype FnDcl %s: \n", fn->getId().c_str());
-            fn->Check();
+          printf("\ntype FnDcl %s: \n", decls->Nth(i)->getId().c_str());
+          table->insert(decls->Nth(i)->getId(), decls->Nth(i));
+          //table->print();
+      }
+      }
+    /*    FnDecl *fn = dynamic_cast<FnDecl*> (decls->Nth(i));
+	if(fn) {
+	  printf("\ntype FnDcl %s: \n", fn->getId().c_str());
+          fn->Check();
           
-  	        printf("\nend of FnDecl check\n");
-	         }
+  	  printf("\nend of FnDecl check\n");
+	  }
         
 	
-	      VarDecl *var = dynamic_cast<VarDecl*> (decls->Nth(i));
-	        if(var){
-	          printf("\ntype VarDcl %s: \n", var->getId().c_str());
-	         }
+	 VarDecl *var = dynamic_cast<VarDecl*> (decls->Nth(i));
+	 if(var){
+	   printf("\ntype VarDcl %s: \n", var->getId().c_str());
+	 }
 
 
     }
 
-   }
+   }*/
 
    /* // sample test - not the actual working code
     // replace it with your own implementation

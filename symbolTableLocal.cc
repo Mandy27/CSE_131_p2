@@ -15,3 +15,7 @@ void SymbolTableLocal::makecopy(){
     
 }
 
+void SymbolTableLocal::print(){
+  for (std::map<string,Decl*>::iterator it=m->begin(); it!=m->end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
+}

@@ -9,14 +9,18 @@
 using namespace std;
 
 class SymbolTable{ 
-    protected:
-        vector<SymbolTableLocal *> *list ;
-    public:
+   protected:
+        vector<SymbolTableLocal *> list ;
+   public:
         SymbolTable(){
-            list  = new vector<SymbolTableLocal*>();
+            //list  = new vector<SymbolTableLocal*>();
         }
         void insert(SymbolTableLocal *s);
+        void insert(string str, Decl *d);
         bool lookup(string str);
+        int end();
+        
+        void print();
 };
 
 #endif

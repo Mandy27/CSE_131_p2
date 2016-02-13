@@ -3,6 +3,7 @@
 
 #include <map>
 #include<string>
+#include<iterator>
 #include "ast_decl.h"
 #include "errors.h"
 
@@ -20,6 +21,8 @@ class SymbolTableLocal{
         void insert(string str, Decl* d);
         bool lookup(string str);
         void makecopy();
+        
+        void print();
 };
 
 #endif

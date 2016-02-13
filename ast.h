@@ -63,6 +63,8 @@ class Node  {
     // subclasses should override PrintChildren() instead
     void Print(int indentLevel, const char *label = NULL); 
     virtual void PrintChildren(int indentLevel)  {}
+
+    virtual void Check(){}
 };
    
 
