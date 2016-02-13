@@ -69,7 +69,7 @@ class Node  {
     virtual void PrintChildren(int indentLevel)  {}
 
     virtual void Check(){}
-    SymbolTable *table;
+    //SymbolTable *table;
 };
    
 

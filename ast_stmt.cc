@@ -12,7 +12,7 @@ using namespace std;
 Program::Program(List<Decl*> *d) {
     Assert(d != NULL);
     (decls=d)->SetParentAll(this);
-    table = new SymbolTable();
+   // table = new SymbolTable();
 }
 
 void Program::PrintChildren(int indentLevel) {
@@ -28,7 +28,7 @@ void Program::Check() {
      *      checking itself, which makes for a great use of inheritance
      *      and polymorphism in the node classes.
      */
-    SymbolTable *table = new SymbolTable();
+    //SymbolTable *table = new SymbolTable();
     if ( decls->NumElements() >= 1 ) {
       for (int i = 0; i < decls->NumElements(); i++){
           D("\n%s: \n", decls->Nth(i)->getId().c_str());
@@ -60,7 +60,8 @@ void StmtBlock::Check(){
 void DeclStmt::Check(){
   D("\ndeclstmt check\n");
   D("%s",decl->getId().c_str());
-  table->insert(decl->getId(), decl);
+  table->print();
+  //table->insert(decl->getId(), decl);
 }
 StmtBlock::StmtBlock(List<VarDecl*> *d, List<Stmt*> *s) {
     Assert(d != NULL && s != NULL);
