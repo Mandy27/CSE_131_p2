@@ -23,6 +23,6 @@ void SymbolTableLocal::makecopy(){
 }
 
 void SymbolTableLocal::print(){
-  //for (std::map<string,Decl*>::iterator it=m->begin(); it!=m->end(); ++it)
-    //cout<< it->first<<" => "<<it->second<<endl;
+  for (std::map<string,Decl*>::iterator it=m->begin(); it!=m->end(); ++it)
+    cout<< it->first<<" => "<<it->second<<endl;
 }

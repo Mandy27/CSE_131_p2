@@ -47,6 +47,7 @@ class VarDecl : public Decl
     const char *GetPrintNameForNode() { return "VarDecl"; }
     void PrintChildren(int indentLevel);
     void Check(SymbolTable *table);
+    Type* getType() {return type;} 
 };
 
 class VarDeclError : public VarDecl

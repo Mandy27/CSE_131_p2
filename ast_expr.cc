@@ -140,17 +140,26 @@ Type* AssignExpr::Check(SymbolTable *table){
   Type* l = left->Check(table);
   Type* r = right->Check(table);
 
-  left->Print(1);
-  if(l)
-  D("left: %s",l->typeName);
-  if(r)
-  D("right: %s",r->typeName);
-
-    return NULL;
+   this->Print(1);
+   if(!l->IsEquivalentTo(r))
+   {
+     D("mismatch");
+     ReportError::IncompatibleOperands(op,l,r);
+   } 
+   
+   return NULL;
 }
 
 Type* VarExpr::Check(SymbolTable *table){
   D("\nin VarExpr::check\n");
+  Decl* res = table->lookup(this->getId());
+  if(res){
+    VarDecl* var = dynamic_cast<VarDecl*>(res);
+    if(var) return var->getType();
+    else D("in VarExpr::Check() Error");
+  }
+  
+  ReportError::IdentifierNotDeclared((Identifier*)this,LookingForType);
   return NULL;
 }
 Type* ArithmeticExpr::Check(SymbolTable *table){

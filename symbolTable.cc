@@ -9,12 +9,17 @@ void SymbolTable::insert(string str, Decl* d){
   list[end()]->insert(str,d);
 }
 Decl* SymbolTable::lookup(string str){
+ /// D("symboltable lookup");
   int size = list.size();
   Decl* res;
-  for(int i = size -1;i >=0;i++){
+  
+  for(int i = size -1;i >=0;i--){
+    //D("\ni =%d", i);
+    //list[i]->print();
     res = list[i]->lookup(str);
     if(res) return res;
   }
+  
   return NULL; //TODO
 }
 

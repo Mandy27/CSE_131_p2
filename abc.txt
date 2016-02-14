@@ -1,8 +1,8 @@
-int  main(int x){
+float  main(int x){
   int y;
   {
     int y;
     x = 1;
   }
-  return;
+  return 1.1;
 }
