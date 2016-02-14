@@ -129,6 +129,7 @@ Call::Call(yyltype loc, Expr *b, Identifier *f, List<Expr*> *a) : Expr(loc)  {
   }
 
 Type* EmptyExpr::Check(SymbolTable *table){
+  D("in empty expr");
   return Type::voidType;
 }
 

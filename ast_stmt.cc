@@ -105,14 +105,17 @@ Type* ReturnStmt::Check(SymbolTable *table){
   D("\nin return statement\n");
   FnDecl* fn = dynamic_cast<FnDecl*>(currFunc);
   if(currFunc){ 
-    printf("%s",currFunc->getType()->typeName);
+    D("%s",currFunc->getType()->typeName);
   }
-  
-  Type *t = expr->Check(table);
-  printf("%s",t->typeName);
-  if(t->IsEquivalentTo(currFunc->getType()))
-    printf("***********true");
-  //printf("%s", ((string)t->typeName).c_str());
+  Type *t;
+  if(expr) t = expr->Check(table);
+  else t = Type::voidType; 
+  D("%s",t->typeName);
+  if(!t->IsEquivalentTo(currFunc->getType()))
+  {
+    D("mismatch");
+    ReportError::ReturnMismatch(this,t,currFunc->getType());
+    }
   return NULL;
 }
 
