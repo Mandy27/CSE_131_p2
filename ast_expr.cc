@@ -198,11 +198,30 @@ Type* RelationalExpr::Check(SymbolTable *table){
 
 Type* PostfixExpr::Check(SymbolTable *table){
   D("\nPOSTFIXEXPR CHECK\n");
+  
   return NULL;
 }
 
+bool checkVec(string name, char* list){
+  string newList = list;
+  for(int i = 0 ; i<  name.length();i++){
+    if(newList.find(name[i]) == string::npos)
+      return false;
+  }
+  return true;
+}
 Type* FieldAccess::Check(SymbolTable *table){
   D("FIELDACCESS");
+  Type *temp = base->Check(table);
+  char v2[] = "xy", v3[] ="xyz", v4[] ="xyzw";
+  char *l;
+  if(temp->IsEquivalentTo(Type::vec2Type)) l =v2;
+  if(temp->IsEquivalentTo(Type::vec3Type)) l =v3;
+  if(temp->IsEquivalentTo(Type::vec4Type)) l =v4;
+
+  if (!(checkVec(field->getName(),l)))
+    ReportError::SwizzleOutOfBound(field,base);
+
   return NULL;
 }
 
