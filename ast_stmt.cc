@@ -112,6 +112,40 @@ Type* ReturnStmt::Check(SymbolTable *table){
   //printf("%s", ((string)t->typeName).c_str());
   return NULL;
 }
+
+Type* IfStmt::Check(SymbolTable *table){
+  return NULL;
+}
+
+Type* Case::Check(SymbolTable *table){
+  return NULL;
+}
+
+
+Type* SwitchStmt::Check(SymbolTable *table){
+  return NULL;
+}
+
+Type* Default::Check(SymbolTable *table){
+  return NULL;
+}
+
+Type* BreakStmt::Check(SymbolTable *table){
+  return NULL;
+}
+
+Type* ContinueStmt::Check(SymbolTable *table){
+  return NULL;
+}
+
+Type* WhileStmt::Check(SymbolTable *table){
+  return NULL;
+}
+
+Type* ForStmt::Check(SymbolTable *table){
+  return NULL;
+}
+
 StmtBlock::StmtBlock(List<VarDecl*> *d, List<Stmt*> *s) {
     Assert(d != NULL && s != NULL);
     (decls=d)->SetParentAll(this);

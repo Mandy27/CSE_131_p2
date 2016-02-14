@@ -33,6 +33,7 @@ class Decl : public Node
     Decl(Identifier *name);
     friend ostream& operator<<(ostream& out, Decl *d) { return out << d->id; }
     string getId() {return id->getName();}//TODO I added
+    virtual void Check(SymbolTable *table) = 0;
 };
 
 class VarDecl : public Decl 

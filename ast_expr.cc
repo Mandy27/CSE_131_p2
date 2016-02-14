@@ -16,6 +16,18 @@ void IntConstant::PrintChildren(int indentLevel) {
     printf("%d", value);
 }
 
+Type* IntConstant::Check(SymbolTable *table) { 
+    return Type::intType;
+}
+
+Type* FloatConstant::Check(SymbolTable *table) { 
+    return Type::floatType;
+}
+
+Type* BoolConstant::Check(SymbolTable *table) { 
+    return Type::boolType;
+}
+
 FloatConstant::FloatConstant(yyltype loc, double val) : Expr(loc) {
     value = val;
 }
@@ -116,8 +128,29 @@ Call::Call(yyltype loc, Expr *b, Identifier *f, List<Expr*> *a) : Expr(loc)  {
     if (actuals) actuals->PrintAll(indentLevel+1, "(actuals) ");
   }
 
-void AssignExpr::Check(SymbolTable *table){
+Type* AssignExpr::Check(SymbolTable *table){
   D("\n*****AssingExpr*********\n");
   VarExpr* var = dynamic_cast<VarExpr* >(getLeft());
   D("\n%s\n",var->getId().c_str());
+
+    return NULL;
+}
+
+Type* ArithmeticExpr::Check(SymbolTable *table){
+  return NULL;
+}
+Type* RelationalExpr::Check(SymbolTable *table){
+  return NULL;
+}
+
+Type* PostfixExpr::Check(SymbolTable *table){
+  return NULL;
+}
+
+Type* FieldAccess::Check(SymbolTable *table){
+  return NULL;
+}
+
+Type* VarExpr::Check(SymbolTable *table){
+  return NULL;
 }

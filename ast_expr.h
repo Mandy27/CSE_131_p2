@@ -24,6 +24,7 @@ class Expr : public Stmt
   public:
     Expr(yyltype loc) : Stmt(loc) {}
     Expr() : Stmt() {}
+    Type* Check(SymbolTable *table){return NULL;}
 };
 
 class ExprError : public Expr
@@ -40,6 +41,7 @@ class EmptyExpr : public Expr
 {
   public:
     const char *GetPrintNameForNode() { return "Empty"; }
+    Type* Check(SymbolTable *table) { return NULL;}
 };
 
 class IntConstant : public Expr 
@@ -51,6 +53,7 @@ class IntConstant : public Expr
     IntConstant(yyltype loc, int val);
     const char *GetPrintNameForNode() { return "IntConstant"; }
     void PrintChildren(int indentLevel);
+    Type* Check(SymbolTable *table); 
 };
 
 class FloatConstant: public Expr 
@@ -62,6 +65,7 @@ class FloatConstant: public Expr
     FloatConstant(yyltype loc, double val);
     const char *GetPrintNameForNode() { return "FloatConstant"; }
     void PrintChildren(int indentLevel);
+    Type* Check(SymbolTable *table);
 };
 
 class BoolConstant : public Expr 
@@ -73,6 +77,7 @@ class BoolConstant : public Expr
     BoolConstant(yyltype loc, bool val);
     const char *GetPrintNameForNode() { return "BoolConstant"; }
     void PrintChildren(int indentLevel);
+    Type* Check(SymbolTable *table);
 };
 
 class VarExpr : public Expr
@@ -86,6 +91,7 @@ class VarExpr : public Expr
     void PrintChildren(int indentLevel);
 
     string getId(){ return id->getName();}
+    Type* Check(SymbolTable *table);
 };
 
 class Operator : public Node 
@@ -123,6 +129,7 @@ class ArithmeticExpr : public CompoundExpr
     ArithmeticExpr(Expr *lhs, Operator *op, Expr *rhs) : CompoundExpr(lhs,op,rhs) {}
     ArithmeticExpr(Operator *op, Expr *rhs) : CompoundExpr(op,rhs) {}
     const char *GetPrintNameForNode() { return "ArithmeticExpr"; }
+    Type* Check(SymbolTable *table);
 };
 
 class RelationalExpr : public CompoundExpr 
@@ -130,6 +137,7 @@ class RelationalExpr : public CompoundExpr
   public:
     RelationalExpr(Expr *lhs, Operator *op, Expr *rhs) : CompoundExpr(lhs,op,rhs) {}
     const char *GetPrintNameForNode() { return "RelationalExpr"; }
+    Type* Check(SymbolTable *table);
 };
 
 class EqualityExpr : public CompoundExpr 
@@ -152,7 +160,7 @@ class AssignExpr : public CompoundExpr
   public:
     AssignExpr(Expr *lhs, Operator *op, Expr *rhs) : CompoundExpr(lhs,op,rhs) {}
     const char *GetPrintNameForNode() { return "AssignExpr"; }
-    void Check(SymbolTable *t);
+    Type* Check(SymbolTable *t);
 };
 
 class PostfixExpr : public CompoundExpr
@@ -160,6 +168,7 @@ class PostfixExpr : public CompoundExpr
   public:
     PostfixExpr(Expr *lhs, Operator *op) : CompoundExpr(lhs,op) {}
     const char *GetPrintNameForNode() { return "PostfixExpr"; }
+    Type* Check(SymbolTable *table);
 };
 
 class LValue : public Expr 
@@ -194,6 +203,7 @@ class FieldAccess : public LValue
     FieldAccess(Expr *base, Identifier *field); //ok to pass NULL base
     const char *GetPrintNameForNode() { return "FieldAccess"; }
     void PrintChildren(int indentLevel);
+    Type* Check(SymbolTable *table);
 };
 
 /* Like field access, call is used both for qualified base.field()

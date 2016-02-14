@@ -40,9 +40,11 @@
 #include <stdlib.h>   // for NULL
 #include "location.h"
 #include <iostream>
+//#include "ast_type.h"
 using namespace std;
 class SymbolTable;
 class FnDecl;
+class Type;
 
 #define DEBUG 1
 #define D(...) \
@@ -69,8 +71,6 @@ class Node  {
     void Print(int indentLevel, const char *label = NULL); 
     virtual void PrintChildren(int indentLevel)  {}
 
-    virtual Type* Check(SymbolTable *table){}
-   
     static FnDecl *currFunc;
     //SymbolTable *table;
 };

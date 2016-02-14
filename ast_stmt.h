@@ -42,6 +42,7 @@ class Stmt : public Node
   public:
      Stmt() : Node() {}
      Stmt(yyltype loc) : Node(loc) {}
+     virtual Type* Check(SymbolTable *table) =0;
 };
 
 class StmtBlock : public Stmt 
@@ -98,6 +99,7 @@ class ForStmt : public LoopStmt
     ForStmt(Expr *init, Expr *test, Expr *step, Stmt *body);
     const char *GetPrintNameForNode() { return "ForStmt"; }
     void PrintChildren(int indentLevel);
+    Type* Check(SymbolTable *table);
 };
 
 class WhileStmt : public LoopStmt 
@@ -106,6 +108,7 @@ class WhileStmt : public LoopStmt
     WhileStmt(Expr *test, Stmt *body) : LoopStmt(test, body) {}
     const char *GetPrintNameForNode() { return "WhileStmt"; }
     void PrintChildren(int indentLevel);
+    Type* Check(SymbolTable *table);
 };
 
 class IfStmt : public ConditionalStmt 
@@ -118,6 +121,7 @@ class IfStmt : public ConditionalStmt
     IfStmt(Expr *test, Stmt *thenBody, Stmt *elseBody);
     const char *GetPrintNameForNode() { return "IfStmt"; }
     void PrintChildren(int indentLevel);
+    Type* Check(SymbolTable *table);
 };
 
 class IfStmtExprError : public IfStmt
@@ -132,7 +136,7 @@ class BreakStmt : public Stmt
   public:
     BreakStmt(yyltype loc) : Stmt(loc) {}
     const char *GetPrintNameForNode() { return "BreakStmt"; }
-    //void Check(SymbolTable *table);
+    Type* Check(SymbolTable *table);
 };
 
 class ContinueStmt : public Stmt 
@@ -140,6 +144,7 @@ class ContinueStmt : public Stmt
   public:
     ContinueStmt(yyltype loc) : Stmt(loc) {}
     const char *GetPrintNameForNode() { return "ContinueStmt"; }
+    Type* Check(SymbolTable *table);
 };
 
 class ReturnStmt : public Stmt  
@@ -175,6 +180,7 @@ class Case : public SwitchLabel
     Case() : SwitchLabel() {}
     Case(Expr *label, Stmt *stmt) : SwitchLabel(label, stmt) {}
     const char *GetPrintNameForNode() { return "Case"; }
+    Type* Check(SymbolTable *table);
 };
 
 class Default : public SwitchLabel
@@ -182,6 +188,7 @@ class Default : public SwitchLabel
   public:
     Default(Stmt *stmt) : SwitchLabel(stmt) {}
     const char *GetPrintNameForNode() { return "Default"; }
+    Type* Check(SymbolTable *table);
 };
 
 class SwitchStmt : public Stmt
@@ -196,6 +203,7 @@ class SwitchStmt : public Stmt
     SwitchStmt(Expr *expr, List<Stmt*> *cases, Default *def);
     virtual const char *GetPrintNameForNode() { return "SwitchStmt"; }
     void PrintChildren(int indentLevel);
+    Type* Check(SymbolTable *table);
 };
 
 class SwitchStmtError : public SwitchStmt
