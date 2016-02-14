@@ -55,7 +55,7 @@ class StmtBlock : public Stmt
     StmtBlock(List<VarDecl*> *variableDeclarations, List<Stmt*> *statements);
     const char *GetPrintNameForNode() { return "StmtBlock"; }
     void PrintChildren(int indentLevel);
-    void Check(SymbolTable *table);
+    Type* Check(SymbolTable *table);
     void Check(SymbolTable *table,List<VarDecl*>* formals);
 };
 
@@ -68,7 +68,7 @@ class DeclStmt: public Stmt
     DeclStmt(Decl *d);
     const char *GetPrintNameForNode() { return "DeclStmt"; }
     void PrintChildren(int indentLevel);
-    void Check(SymbolTable *table);
+    Type* Check(SymbolTable *table);
 };
   
 class ConditionalStmt : public Stmt
@@ -152,7 +152,7 @@ class ReturnStmt : public Stmt
     const char *GetPrintNameForNode() { return "ReturnStmt"; }
     void PrintChildren(int indentLevel);
 
-    void Check(SymbolTable* table);
+    Type* Check(SymbolTable* table);
     Expr *getExpr(){return expr;}
 };
 

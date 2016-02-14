@@ -69,7 +69,7 @@ void StmtBlock::Check(SymbolTable *table,List<VarDecl*>* formals){
   table->deleteScope();
   
 }
-void StmtBlock::Check(SymbolTable *table){
+Type* StmtBlock::Check(SymbolTable *table){
   D("\n*********STMTBLOCK *********************** check\n");
   D("\nvar list\n");
   table->newScope();
@@ -91,15 +91,17 @@ void StmtBlock::Check(SymbolTable *table){
   table->print();
   D("\nend of one scope\n");
   table->deleteScope();
+  return NULL;
 }
-void DeclStmt::Check(SymbolTable *table){
+Type* DeclStmt::Check(SymbolTable *table){
   D("\nDeclstmt check\n");
   D("%s",decl->getId().c_str());
   table->insert(decl->getId(), decl);
   table->print();
+  return NULL;
 }
 
-void ReturnStmt::Check(SymbolTable *table){
+Type* ReturnStmt::Check(SymbolTable *table){
   D("\nin return statement\n");
   FnDecl* fn = dynamic_cast<FnDecl*>(currFunc);
   if(currFunc){ 
@@ -108,6 +110,7 @@ void ReturnStmt::Check(SymbolTable *table){
   
   //Type *t =(Type*) this->getExpr();
   //printf("%s", ((string)t->typeName).c_str());
+  return NULL;
 }
 StmtBlock::StmtBlock(List<VarDecl*> *d, List<Stmt*> *s) {
     Assert(d != NULL && s != NULL);

@@ -69,7 +69,7 @@ class Node  {
     void Print(int indentLevel, const char *label = NULL); 
     virtual void PrintChildren(int indentLevel)  {}
 
-    virtual void Check(SymbolTable *table){}
+    virtual Type* Check(SymbolTable *table){}
    
     static FnDecl *currFunc;
     //SymbolTable *table;
