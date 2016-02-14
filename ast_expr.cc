@@ -128,6 +128,10 @@ Call::Call(yyltype loc, Expr *b, Identifier *f, List<Expr*> *a) : Expr(loc)  {
     if (actuals) actuals->PrintAll(indentLevel+1, "(actuals) ");
   }
 
+Type* EmptyExpr::Check(SymbolTable *table){
+  return Type::voidType;
+}
+
 Type* AssignExpr::Check(SymbolTable *table){
   D("\n*****AssingExpr*********\n");
   VarExpr* var = dynamic_cast<VarExpr* >(getLeft());

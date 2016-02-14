@@ -41,7 +41,7 @@ class EmptyExpr : public Expr
 {
   public:
     const char *GetPrintNameForNode() { return "Empty"; }
-    Type* Check(SymbolTable *table) { return NULL;}
+    Type* Check(SymbolTable *table);
 };
 
 class IntConstant : public Expr 

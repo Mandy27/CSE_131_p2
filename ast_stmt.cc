@@ -105,10 +105,13 @@ Type* ReturnStmt::Check(SymbolTable *table){
   D("\nin return statement\n");
   FnDecl* fn = dynamic_cast<FnDecl*>(currFunc);
   if(currFunc){ 
-    cout<<currFunc->getType()->typeName;
+    printf("%s",currFunc->getType()->typeName);
   }
   
-  //Type *t =(Type*) this->getExpr();
+  Type *t = expr->Check(table);
+  printf("%s",t->typeName);
+  if(t->IsEquivalentTo(currFunc->getType()))
+    printf("***********true");
   //printf("%s", ((string)t->typeName).c_str());
   return NULL;
 }
