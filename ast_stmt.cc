@@ -160,6 +160,17 @@ Type* BreakStmt::Check(SymbolTable *table){
 }
 
 Type* ContinueStmt::Check(SymbolTable *table){
+  D("\nContinueStmt check\n");
+  Node *temp = this;
+
+  while((temp = temp->GetParent()) != NULL){
+   // temp->Print(1);
+    if(dynamic_cast<WhileStmt*>(temp)||dynamic_cast<ForStmt*>(temp)){
+      D("Continue STATEMENT");
+      return NULL;
+  }
+  }
+  ReportError::ContinueOutsideLoop(this);
   return NULL;
 }
 
@@ -167,12 +178,23 @@ Type* WhileStmt::Check(SymbolTable *table){
   D("\nWhileStmt\n");
   
   Type *tmp = test->Check(table);
-  if(tmp)
-  printf("%s",tmp->typeName);
+  if(!tmp->IsEquivalentTo(Type::boolType)){
+    ReportError::TestNotBoolean(getExpr());
+  }
+  body->Check(table);
   return NULL;
 }
 
 Type* ForStmt::Check(SymbolTable *table){
+  
+  init->Check(table);
+  Type* tmp = test->Check(table);
+  if(!tmp->IsEquivalentTo(Type::boolType)){
+    ReportError::TestNotBoolean(test);
+  }
+  step->Check(table);
+  body->Check(table);
+
   return NULL;
 }
 

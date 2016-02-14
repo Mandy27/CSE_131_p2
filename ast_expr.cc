@@ -135,8 +135,6 @@ Type* EmptyExpr::Check(SymbolTable *table){
 
 Type* AssignExpr::Check(SymbolTable *table){
   D("\n*****AssingExpr*********\n");
-  //VarExpr* var = dynamic_cast<VarExpr* >(getLeft());
-  //D("\n%s\n",var->getId().c_str());
   Type* l = left->Check(table);
   Type* r = right->Check(table);
 
@@ -160,7 +158,7 @@ Type* VarExpr::Check(SymbolTable *table){
     else D("in VarExpr::Check() Error");
   }
   
-  ReportError::IdentifierNotDeclared(this->getIdentifier(),LookingForType);
+  ReportError::IdentifierNotDeclared(this->getIdentifier(),LookingForVariable);
   return NULL;
 }
 Type* ArithmeticExpr::Check(SymbolTable *table){
