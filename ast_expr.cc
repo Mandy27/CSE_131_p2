@@ -118,4 +118,6 @@ Call::Call(yyltype loc, Expr *b, Identifier *f, List<Expr*> *a) : Expr(loc)  {
 
 void AssignExpr::Check(SymbolTable *table){
   D("\n*****AssingExpr*********\n");
+  getLeft()->getId();
+  //table->find(lhs)
 }

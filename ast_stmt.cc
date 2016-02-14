@@ -81,7 +81,7 @@ void StmtBlock::Check(SymbolTable *table){
     stmts->Nth(i)->Check(table);
     AssignExpr* a = dynamic_cast<AssignExpr*> (stmts->Nth(i));
     EqualityExpr* e = dynamic_cast<EqualityExpr*> (stmts->Nth(i));
-    if(a) D("Ass");
+    if(a) {D("Ass"); }//a->Check(table);}
     if(e) D("Eq");
   }
   

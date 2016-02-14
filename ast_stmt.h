@@ -42,7 +42,6 @@ class Stmt : public Node
   public:
      Stmt() : Node() {}
      Stmt(yyltype loc) : Node(loc) {}
-     //void Check();
 };
 
 class StmtBlock : public Stmt 
