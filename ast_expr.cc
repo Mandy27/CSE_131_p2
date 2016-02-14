@@ -162,6 +162,27 @@ Type* VarExpr::Check(SymbolTable *table){
   return NULL;
 }
 Type* ArithmeticExpr::Check(SymbolTable *table){
+  D("\nARITHMETIC EXPR\n");
+  if(left){
+    Type *l = left->Check(table);
+    Type *r = right->Check(table);
+    if(l->IsEquivalentTo(r)&& (l->IsEquivalentTo(Type::intType) ||l->IsEquivalentTo(Type::floatType)))
+      return l;
+    else {
+      ReportError::IncompatibleOperands(op,l,r);
+      return NULL;
+    }
+  }else if(right){
+    Type *r = right->Check(table);
+    if(r->IsEquivalentTo(Type::intType) ||r->IsEquivalentTo(Type::floatType))
+      return r;
+    else{
+      ReportError::IncompatibleOperand(op,r);
+      return NULL;
+    }
+  }else{ //TODO both left and right are NULL
+    D("left and right are NULL");
+  }
   return NULL;
 }
 Type* RelationalExpr::Check(SymbolTable *table){
@@ -176,10 +197,12 @@ Type* RelationalExpr::Check(SymbolTable *table){
 }
 
 Type* PostfixExpr::Check(SymbolTable *table){
+  D("\nPOSTFIXEXPR CHECK\n");
   return NULL;
 }
 
 Type* FieldAccess::Check(SymbolTable *table){
+  D("FIELDACCESS");
   return NULL;
 }
 

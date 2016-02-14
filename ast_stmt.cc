@@ -61,7 +61,7 @@ void StmtBlock::Check(SymbolTable *table,List<VarDecl*>* formals){
   for (int i = 0; i < stmts->NumElements(); i++){
     D("\n%d",i);
     stmts->Nth(i)->Check(table);
- //   stmts->Nth(i)->Print(1);
+   // stmts->Nth(i)->Print(1);
   }
   
   D("\nend stmtblock check\n");
@@ -131,11 +131,21 @@ Type* IfStmt::Check(SymbolTable *table){
 }
 
 Type* Case::Check(SymbolTable *table){
+  D("\nCASE CHECK\n");
+  getStmt()->Check(table);
   return NULL;
 }
 
 
 Type* SwitchStmt::Check(SymbolTable *table){
+  D("\nSWITCH STATEMENT\n");
+  expr->Check(table); 
+  for(int i = 0; i< cases->NumElements();i++) {
+        cases->Nth(i)->Check(table);
+      //  cases->Nth(i)->Print(1);
+  }
+  if(def)
+    def->Check(table);
   return NULL;
 }
 
@@ -148,7 +158,7 @@ Type* BreakStmt::Check(SymbolTable *table){
   Node *temp = this;//this->GetParent();
 
   while((temp = temp->GetParent()) != NULL){
-   // temp->Print(1);
+    temp->Print(1);
     if(dynamic_cast<WhileStmt*>(temp) || dynamic_cast<Case*>(temp)
        ||dynamic_cast<ForStmt*>(temp)|| dynamic_cast<Default*>(temp)){
       D("BREAK STATEMENT");
