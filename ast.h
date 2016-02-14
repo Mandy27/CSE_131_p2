@@ -46,7 +46,7 @@ class SymbolTable;
 class FnDecl;
 class Type;
 
-#define DEBUG 1
+#define DEBUG 0
 #define D(...) \
             do { if (DEBUG) fprintf(stdout, __VA_ARGS__); } while (0)
 

@@ -140,7 +140,8 @@ Type* AssignExpr::Check(SymbolTable *table){
   Type* l = left->Check(table);
   Type* r = right->Check(table);
 
-   this->Print(1);
+   //this->Print(1);
+   if(l &&r )
    if(!l->IsEquivalentTo(r))
    {
      D("mismatch");
@@ -159,14 +160,21 @@ Type* VarExpr::Check(SymbolTable *table){
     else D("in VarExpr::Check() Error");
   }
   
-  ReportError::IdentifierNotDeclared((Identifier*)this,LookingForType);
+  ReportError::IdentifierNotDeclared(this->getIdentifier(),LookingForType);
   return NULL;
 }
 Type* ArithmeticExpr::Check(SymbolTable *table){
   return NULL;
 }
 Type* RelationalExpr::Check(SymbolTable *table){
-  return NULL;
+  Type* l = left->Check(table);
+  Type* r = right->Check(table);
+  if(l->IsEquivalentTo(r) && (l->IsEquivalentTo(Type::intType) ||  l->IsEquivalentTo(Type::floatType)))
+    return Type::boolType;
+  else {
+    ReportError::IncompatibleOperands(op,l,r);
+    return NULL;
+  }
 }
 
 Type* PostfixExpr::Check(SymbolTable *table){

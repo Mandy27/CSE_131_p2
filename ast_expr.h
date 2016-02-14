@@ -91,6 +91,7 @@ class VarExpr : public Expr
     void PrintChildren(int indentLevel);
 
     string getId(){ return id->getName();}
+    Identifier* getIdentifier(){return id;}
     Type* Check(SymbolTable *table);
 };
 

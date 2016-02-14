@@ -59,8 +59,9 @@ void StmtBlock::Check(SymbolTable *table,List<VarDecl*>* formals){
   }
   D("\nstmt list\n");
   for (int i = 0; i < stmts->NumElements(); i++){
-    D("%d",i);
+    D("\n%d",i);
     stmts->Nth(i)->Check(table);
+ //   stmts->Nth(i)->Print(1);
   }
   
   D("\nend stmtblock check\n");
@@ -116,6 +117,16 @@ Type* ReturnStmt::Check(SymbolTable *table){
 }
 
 Type* IfStmt::Check(SymbolTable *table){
+  //this->Print(1);
+  Type *tmp = test->Check(table);
+  if(!tmp) D("test expr is NULL");
+  if(!tmp->IsEquivalentTo(Type::boolType)) 
+    ReportError::TestNotBoolean(test);
+
+  body->Check(table);
+  if(elseBody) 
+    elseBody->Check(table);
+    
   return NULL;
 }
 
@@ -137,9 +148,12 @@ Type* BreakStmt::Check(SymbolTable *table){
   Node *temp = this;//this->GetParent();
 
   while((temp = temp->GetParent()) != NULL){
+   // temp->Print(1);
     if(dynamic_cast<WhileStmt*>(temp) || dynamic_cast<Case*>(temp)
-       ||dynamic_cast<ForStmt*>(temp)|| dynamic_cast<Default*>(temp))
+       ||dynamic_cast<ForStmt*>(temp)|| dynamic_cast<Default*>(temp)){
+      D("BREAK STATEMENT");
       return NULL;
+  }
   }
   ReportError::BreakOutsideLoop(this);
   return NULL;
