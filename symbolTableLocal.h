@@ -20,7 +20,7 @@ class SymbolTableLocal{
         }
         ~SymbolTableLocal(){delete m;};
         void insert(string str, Decl* d);
-        bool lookup(string str);
+        Decl* lookup(string str);
         void makecopy();
         
         void print();

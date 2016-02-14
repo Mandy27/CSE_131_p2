@@ -81,10 +81,6 @@ Type* StmtBlock::Check(SymbolTable *table){
   for (int i = 0; i < stmts->NumElements(); i++){
     D("%d",i);
     stmts->Nth(i)->Check(table);
-    AssignExpr* a = dynamic_cast<AssignExpr*> (stmts->Nth(i));
-    EqualityExpr* e = dynamic_cast<EqualityExpr*> (stmts->Nth(i));
-    if(a) {D("Ass"); }//a->Check(table);}
-    if(e) D("Eq");
   }
   
   D("\nend stmtblock check\n");
@@ -137,6 +133,15 @@ Type* Default::Check(SymbolTable *table){
 }
 
 Type* BreakStmt::Check(SymbolTable *table){
+  D("\nBreakStmt check\n");
+  Node *temp = this;//this->GetParent();
+
+  while((temp = temp->GetParent()) != NULL){
+    if(dynamic_cast<WhileStmt*>(temp) || dynamic_cast<Case*>(temp)
+       ||dynamic_cast<ForStmt*>(temp)|| dynamic_cast<Default*>(temp))
+      return NULL;
+  }
+  ReportError::BreakOutsideLoop(this);
   return NULL;
 }
 
@@ -145,6 +150,11 @@ Type* ContinueStmt::Check(SymbolTable *table){
 }
 
 Type* WhileStmt::Check(SymbolTable *table){
+  D("\nWhileStmt\n");
+  
+  Type *tmp = test->Check(table);
+  if(tmp)
+  printf("%s",tmp->typeName);
   return NULL;
 }
 

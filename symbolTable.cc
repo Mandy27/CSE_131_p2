@@ -8,8 +8,14 @@ void SymbolTable::insert(string str, Decl* d){
   //printf("\n size: %d\n",end());
   list[end()]->insert(str,d);
 }
-bool SymbolTable::lookup(string str){
-  return false; //TODO
+Decl* SymbolTable::lookup(string str){
+  int size = list.size();
+  Decl* res;
+  for(int i = size -1;i >=0;i++){
+    res = list[i]->lookup(str);
+    if(res) return res;
+  }
+  return NULL; //TODO
 }
 
 int SymbolTable::end(){

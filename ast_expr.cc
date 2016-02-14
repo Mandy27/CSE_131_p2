@@ -135,12 +135,24 @@ Type* EmptyExpr::Check(SymbolTable *table){
 
 Type* AssignExpr::Check(SymbolTable *table){
   D("\n*****AssingExpr*********\n");
-  VarExpr* var = dynamic_cast<VarExpr* >(getLeft());
-  D("\n%s\n",var->getId().c_str());
+  //VarExpr* var = dynamic_cast<VarExpr* >(getLeft());
+  //D("\n%s\n",var->getId().c_str());
+  Type* l = left->Check(table);
+  Type* r = right->Check(table);
+
+  left->Print(1);
+  if(l)
+  D("left: %s",l->typeName);
+  if(r)
+  D("right: %s",r->typeName);
 
     return NULL;
 }
 
+Type* VarExpr::Check(SymbolTable *table){
+  D("\nin VarExpr::check\n");
+  return NULL;
+}
 Type* ArithmeticExpr::Check(SymbolTable *table){
   return NULL;
 }
@@ -156,6 +168,3 @@ Type* FieldAccess::Check(SymbolTable *table){
   return NULL;
 }
 
-Type* VarExpr::Check(SymbolTable *table){
-  return NULL;
-}

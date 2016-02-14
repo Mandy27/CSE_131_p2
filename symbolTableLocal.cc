@@ -14,8 +14,8 @@ void SymbolTableLocal::insert(string str, Decl* d){
     m->insert(pair<string, Decl*> (d->getId(), d));
 }
 
-bool SymbolTableLocal::lookup(string str){
-  return (m->find(str)->second)?true:false;
+Decl* SymbolTableLocal::lookup(string str){
+  return (m->find(str)->second);
 }
 
 void SymbolTableLocal::makecopy(){
