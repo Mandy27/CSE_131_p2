@@ -71,7 +71,7 @@ class Node  {
 
     virtual void Check(SymbolTable *table){}
    
-      FnDecl *currFunc;
+    static FnDecl *currFunc;
     //SymbolTable *table;
 };
    

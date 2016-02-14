@@ -12,15 +12,15 @@ Node::Node(yyltype loc) {
     location = new yyltype(loc);
     parent = NULL;
     //table = new SymbolTable();
-    //currFunc = NULL;
 }
 
 Node::Node() {
     location = NULL;
     parent = NULL;
  //   currFunc = NULL;
-    //table = new SymbolTable();
 }
+
+FnDecl *Node::currFunc = NULL;
 
 /* The Print method is used to print the parse tree nodes.
  * If this node has a location (most nodes do, but some do not), it

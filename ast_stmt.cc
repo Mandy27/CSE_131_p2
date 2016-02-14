@@ -101,17 +101,13 @@ void DeclStmt::Check(SymbolTable *table){
 
 void ReturnStmt::Check(SymbolTable *table){
   D("\nin return statement\n");
- // this->getExpr();
-  //D("hel");
   FnDecl* fn = dynamic_cast<FnDecl*>(currFunc);
-  //if(currFunc) D("\ncurrFunc not NULL**********\n");
-  //D("hello");
-  if(fn){ 
-    cout<<fn->getType()->typeName;
+  if(currFunc){ 
+    cout<<currFunc->getType()->typeName;
   }
-  D("hello2");
   
-  //this.IsEquivalentTo(fn->getType());
+  //Type *t =(Type*) this->getExpr();
+  //printf("%s", ((string)t->typeName).c_str());
 }
 StmtBlock::StmtBlock(List<VarDecl*> *d, List<Stmt*> *s) {
     Assert(d != NULL && s != NULL);
