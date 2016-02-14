@@ -84,6 +84,8 @@ class VarExpr : public Expr
     VarExpr(yyltype loc, Identifier *id);
     const char *GetPrintNameForNode() { return "VarExpr"; }
     void PrintChildren(int indentLevel);
+
+    string getId(){ return id->getName();}
 };
 
 class Operator : public Node 

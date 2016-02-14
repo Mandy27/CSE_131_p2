@@ -48,6 +48,9 @@ void FnDecl::PrintChildren(int indentLevel) {
 void FnDecl::Check(SymbolTable *table){ //TODO added
     D("\nIn FnDecl check\n");
     
+   // Node::currFunc = new FnDecl();
+    currFunc = this;    
+    //if(currFunc) D("*********************************");
     StmtBlock* stmtblock = (StmtBlock*)  body;
     stmtblock->Check(table,formals); 
 }

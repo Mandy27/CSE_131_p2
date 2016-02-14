@@ -12,11 +12,13 @@ Node::Node(yyltype loc) {
     location = new yyltype(loc);
     parent = NULL;
     //table = new SymbolTable();
+    //currFunc = NULL;
 }
 
 Node::Node() {
     location = NULL;
     parent = NULL;
+ //   currFunc = NULL;
     //table = new SymbolTable();
 }
 

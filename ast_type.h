@@ -21,6 +21,7 @@ using namespace std;
 class Type : public Node 
 {
   protected:
+  public:
     char *typeName;
 
   public :

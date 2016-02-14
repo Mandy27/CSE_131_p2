@@ -69,6 +69,7 @@ class FnDecl : public Decl
     const char *GetPrintNameForNode() { return "FnDecl"; }
     void PrintChildren(int indentLevel);
     void Check(SymbolTable *table); //TODO added
+    Type *getType() {return returnType;}
 };
 
 class FormalsError : public FnDecl

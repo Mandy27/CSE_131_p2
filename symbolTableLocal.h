@@ -18,6 +18,7 @@ class SymbolTableLocal{
         SymbolTableLocal(){
             m = new map<string, Decl*>();
         }
+        ~SymbolTableLocal(){delete m;};
         void insert(string str, Decl* d);
         bool lookup(string str);
         void makecopy();

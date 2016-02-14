@@ -61,11 +61,13 @@ void StmtBlock::Check(SymbolTable *table,List<VarDecl*>* formals){
   for (int i = 0; i < stmts->NumElements(); i++){
     D("%d",i);
     stmts->Nth(i)->Check(table);
-    //stmts->Nth(i)->Print(1);
   }
   
   D("\nend stmtblock check\n");
   table->print();
+  D("\nend of one scope\n");
+  table->deleteScope();
+  
 }
 void StmtBlock::Check(SymbolTable *table){
   D("\n*********STMTBLOCK *********************** check\n");
@@ -87,12 +89,29 @@ void StmtBlock::Check(SymbolTable *table){
   
   D("\nend stmtblock check\n");
   table->print();
+  D("\nend of one scope\n");
+  table->deleteScope();
 }
 void DeclStmt::Check(SymbolTable *table){
   D("\nDeclstmt check\n");
   D("%s",decl->getId().c_str());
   table->insert(decl->getId(), decl);
   table->print();
+}
+
+void ReturnStmt::Check(SymbolTable *table){
+  D("\nin return statement\n");
+ // this->getExpr();
+  //D("hel");
+  FnDecl* fn = dynamic_cast<FnDecl*>(currFunc);
+  //if(currFunc) D("\ncurrFunc not NULL**********\n");
+  //D("hello");
+  if(fn){ 
+    cout<<fn->getType()->typeName;
+  }
+  D("hello2");
+  
+  //this.IsEquivalentTo(fn->getType());
 }
 StmtBlock::StmtBlock(List<VarDecl*> *d, List<Stmt*> *s) {
     Assert(d != NULL && s != NULL);

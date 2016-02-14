@@ -42,6 +42,7 @@
 #include <iostream>
 using namespace std;
 class SymbolTable;
+class FnDecl;
 
 #define DEBUG 1
 #define D(...) \
@@ -69,6 +70,8 @@ class Node  {
     virtual void PrintChildren(int indentLevel)  {}
 
     virtual void Check(SymbolTable *table){}
+   
+      FnDecl *currFunc;
     //SymbolTable *table;
 };
    

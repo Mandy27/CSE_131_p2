@@ -150,6 +150,9 @@ class ReturnStmt : public Stmt
     ReturnStmt(yyltype loc, Expr *expr = NULL);
     const char *GetPrintNameForNode() { return "ReturnStmt"; }
     void PrintChildren(int indentLevel);
+
+    void Check(SymbolTable* table);
+    Expr *getExpr(){return expr;}
 };
 
 class SwitchLabel : public Stmt
