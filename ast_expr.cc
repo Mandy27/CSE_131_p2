@@ -170,12 +170,13 @@ Type* ArithmeticExpr::Check(SymbolTable *table){
   if(left){
     Type *l = left->Check(table);
     Type *r = right->Check(table);
-    if(op )
+    if(op ){
     if(l->IsEquivalentTo(r)&& (l->IsEquivalentTo(Type::intType) ||l->IsEquivalentTo(Type::floatType) ||l->IsEquivalentTo(Type::boolType))) //TODO bool
       return l;
     else {
       ReportError::IncompatibleOperands(op,l,r);
       return NULL;
+    }
     }
   }else if(right){
     Type *r = right->Check(table);
