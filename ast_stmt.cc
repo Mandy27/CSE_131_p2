@@ -63,6 +63,12 @@ void StmtBlock::Check(SymbolTable *table,List<VarDecl*>* formals){
     stmts->Nth(i)->Check(table);
    // stmts->Nth(i)->Print(1);
   }
+  if(encounterReturn){
+    encounterReturn=false; 
+  }else{
+    if(!currFunc->getType()->IsEquivalentTo(Type::voidType))
+      ReportError::ReturnMissing(currFunc);
+  }
   
   D("\nend stmtblock check\n");
   table->print();
@@ -76,7 +82,7 @@ Type* StmtBlock::Check(SymbolTable *table){
   table->newScope();
   for (int i = 0; i < decls->NumElements(); i++){
     D("%d",i);
-    decls->Nth(i)->Print(1);
+   // decls->Nth(i)->Print(1);
   }
   D("\nstmt list\n");
   for (int i = 0; i < stmts->NumElements(); i++){
@@ -100,6 +106,7 @@ Type* DeclStmt::Check(SymbolTable *table){
 
 Type* ReturnStmt::Check(SymbolTable *table){
   D("\nin return statement\n");
+  encounterReturn =true;
   FnDecl* fn = dynamic_cast<FnDecl*>(currFunc);
   if(currFunc){ 
     D("%s",currFunc->getType()->typeName);
@@ -158,7 +165,7 @@ Type* BreakStmt::Check(SymbolTable *table){
   Node *temp = this;//this->GetParent();
 
   while((temp = temp->GetParent()) != NULL){
-    temp->Print(1);
+  //  temp->Print(1);
     if(dynamic_cast<WhileStmt*>(temp) || dynamic_cast<Case*>(temp)
        ||dynamic_cast<ForStmt*>(temp)|| dynamic_cast<Default*>(temp)){
       D("BREAK STATEMENT");

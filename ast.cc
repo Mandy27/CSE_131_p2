@@ -21,6 +21,7 @@ Node::Node() {
 }
 
 FnDecl *Node::currFunc = NULL;
+bool Node::encounterReturn = false;
 
 /* The Print method is used to print the parse tree nodes.
  * If this node has a location (most nodes do, but some do not), it
