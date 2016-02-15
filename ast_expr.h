@@ -25,6 +25,7 @@ class Expr : public Stmt
     Expr(yyltype loc) : Stmt(loc) {}
     Expr() : Stmt() {}
     Type* Check(SymbolTable *table){return NULL;}
+    friend ostream& operator<<(ostream& out, Expr *base) { return out << base->GetPrintNameForNode(); }
 };
 
 class ExprError : public Expr

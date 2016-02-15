@@ -139,14 +139,15 @@ Type* AssignExpr::Check(SymbolTable *table){
   Type* r = right->Check(table);
 
    //this->Print(1);
-   if(l &&r )
+   if(l&&r)
    if(!l->IsEquivalentTo(r))
    {
      D("mismatch");
      ReportError::IncompatibleOperands(op,l,r);
+     return Type::errorType;
    } 
    
-   return NULL;
+   return r;
 }
 
 Type* VarExpr::Check(SymbolTable *table){
@@ -215,12 +216,27 @@ Type* FieldAccess::Check(SymbolTable *table){
   Type *temp = base->Check(table);
   char v2[] = "xy", v3[] ="xyz", v4[] ="xyzw";
   char *l;
+  l = v4;
+
+  if(!(temp->IsEquivalentTo(Type::vec2Type) || temp->IsEquivalentTo(Type::vec3Type)
+     ||temp->IsEquivalentTo(Type::vec4Type))){
+     ReportError::InaccessibleSwizzle(field,base);
+  }
+  if(field->getName().length()>4){
+    ReportError::OversizedVector(field,base);
+  }
+  if (!(checkVec(field->getName(),l))){
+    ReportError::InvalidSwizzle(field,base);
+    return Type::errorType;
+  }
+
   if(temp->IsEquivalentTo(Type::vec2Type)) l =v2;
   if(temp->IsEquivalentTo(Type::vec3Type)) l =v3;
-  if(temp->IsEquivalentTo(Type::vec4Type)) l =v4;
 
-  if (!(checkVec(field->getName(),l)))
+  if (!(checkVec(field->getName(),l))){
     ReportError::SwizzleOutOfBound(field,base);
+    return Type::errorType;
+   }
 
   return NULL;
 }
