@@ -127,6 +127,8 @@ Type* IfStmt::Check(SymbolTable *table){
   //this->Print(1);
   Type *tmp = test->Check(table);
   if(!tmp) D("test expr is NULL");
+  if(tmp->IsEquivalentTo(Type::errorType)) 
+    return Type::errorType;
   if(!tmp->IsEquivalentTo(Type::boolType)) 
     ReportError::TestNotBoolean(test);
 
@@ -134,7 +136,7 @@ Type* IfStmt::Check(SymbolTable *table){
   if(elseBody) 
     elseBody->Check(table);
     
-  return NULL;
+  return Type::errorType;
 }
 
 Type* Case::Check(SymbolTable *table){
