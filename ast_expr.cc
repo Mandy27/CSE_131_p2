@@ -139,6 +139,9 @@ Type* AssignExpr::Check(SymbolTable *table){
   Type* r = right->Check(table);
 
    //this->Print(1);
+   if(l->IsEquivalentTo(Type::errorType)|| r->IsEquivalentTo(Type::errorType)){
+     return Type::errorType;
+   }
    if(l&&r)
    if(!l->IsEquivalentTo(r))
    {
@@ -160,14 +163,15 @@ Type* VarExpr::Check(SymbolTable *table){
   }
   
   ReportError::IdentifierNotDeclared(this->getIdentifier(),LookingForVariable);
-  return NULL;
+  return Type::errorType;;
 }
 Type* ArithmeticExpr::Check(SymbolTable *table){
   D("\nARITHMETIC EXPR\n");
   if(left){
     Type *l = left->Check(table);
     Type *r = right->Check(table);
-    if(l->IsEquivalentTo(r)&& (l->IsEquivalentTo(Type::intType) ||l->IsEquivalentTo(Type::floatType)))
+    if(op )
+    if(l->IsEquivalentTo(r)&& (l->IsEquivalentTo(Type::intType) ||l->IsEquivalentTo(Type::floatType) ||l->IsEquivalentTo(Type::boolType))) //TODO bool
       return l;
     else {
       ReportError::IncompatibleOperands(op,l,r);
@@ -187,20 +191,42 @@ Type* ArithmeticExpr::Check(SymbolTable *table){
   return NULL;
 }
 Type* RelationalExpr::Check(SymbolTable *table){
+  D("RELATIONALEXPR");
   Type* l = left->Check(table);
   Type* r = right->Check(table);
   if(l->IsEquivalentTo(r) && (l->IsEquivalentTo(Type::intType) ||  l->IsEquivalentTo(Type::floatType)))
     return Type::boolType;
   else {
     ReportError::IncompatibleOperands(op,l,r);
-    return NULL;
+    return Type::errorType;;
   }
 }
 
+Type* LogicalExpr::Check(SymbolTable *table){
+  D("\nLOGICAL EXPR\n");
+  /*Type* l = left->Check(table);
+  Type* r = right->Check(table);
+  if(l->IsEquivalentTo(r) && (l->IsEquivalentTo(Type::boolType))){
+    return Type::boolType;
+  }else {
+    ReportError::IncompatibleOperands(op,l,r);
+    return Type::errorType;
+  }*/
+  return NULL;
+}
+
+Type* EqualityExpr::Check(SymbolTable *table){
+  D("\nEQUALITY EXPR\n");
+  return NULL;
+}
 Type* PostfixExpr::Check(SymbolTable *table){
   D("\nPOSTFIXEXPR CHECK\n");
-  
-  return NULL;
+  Type* temp = left->Check(table);
+  if(!temp->IsEquivalentTo(Type::intType)){
+    ReportError::IncompatibleOperand(op,temp);
+    return Type::errorType;
+  }
+  return Type::intType;
 }
 
 bool checkVec(string name, char* list){
@@ -221,22 +247,29 @@ Type* FieldAccess::Check(SymbolTable *table){
   if(!(temp->IsEquivalentTo(Type::vec2Type) || temp->IsEquivalentTo(Type::vec3Type)
      ||temp->IsEquivalentTo(Type::vec4Type))){
      ReportError::InaccessibleSwizzle(field,base);
+     return Type::errorType;
   }
-  if(field->getName().length()>4){
-    ReportError::OversizedVector(field,base);
-  }
+
+
   if (!(checkVec(field->getName(),l))){
     ReportError::InvalidSwizzle(field,base);
     return Type::errorType;
-  }
-
-  if(temp->IsEquivalentTo(Type::vec2Type)) l =v2;
-  if(temp->IsEquivalentTo(Type::vec3Type)) l =v3;
-
-  if (!(checkVec(field->getName(),l))){
+  } 
+  else{
+  
+   if(temp->IsEquivalentTo(Type::vec2Type)) l =v2;
+   if(temp->IsEquivalentTo(Type::vec3Type)) l =v3;
+   if (!(checkVec(field->getName(),l))){
     ReportError::SwizzleOutOfBound(field,base);
     return Type::errorType;
    }
+   else if(field->getName().length()>4){
+    ReportError::OversizedVector(field,base);
+    return Type::errorType;
+  }
+  }
+
+
 
   return NULL;
 }

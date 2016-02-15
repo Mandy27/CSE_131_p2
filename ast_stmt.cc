@@ -166,7 +166,7 @@ Type* BreakStmt::Check(SymbolTable *table){
 
   while((temp = temp->GetParent()) != NULL){
   //  temp->Print(1);
-    if(dynamic_cast<WhileStmt*>(temp) || dynamic_cast<Case*>(temp)
+    if(dynamic_cast<WhileStmt*>(temp) || dynamic_cast<Case*>(temp) ||dynamic_cast<SwitchStmt*>(temp)
        ||dynamic_cast<ForStmt*>(temp)|| dynamic_cast<Default*>(temp)){
       D("BREAK STATEMENT");
       return NULL;
