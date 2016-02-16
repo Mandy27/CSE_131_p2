@@ -1,5 +1,7 @@
-int x;
-bool x;
-int x () {
-  x = 3;
-}
+int main() {
+       while (true) {
+           for (i = 5; i < 3; i++) {
+               return 5;
+           }
+       }
+   }

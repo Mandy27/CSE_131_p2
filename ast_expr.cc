@@ -158,11 +158,18 @@ Type* VarExpr::Check(SymbolTable *table){
   Decl* res = table->lookup(this->getId());
   if(res){
     VarDecl* var = dynamic_cast<VarDecl*>(res);
-    if(var) return var->getType();
-    //else D("in VarExpr::Check() Error");
+    if(var){
+      Type *tmp =  var->getType();
+      if(tmp->IsEquivalentTo(Type::errorType))
+        return Type::errorType;
+      else return tmp;
+      }
   }
   
   ReportError::IdentifierNotDeclared(this->getIdentifier(),LookingForVariable);
+  Decl *temp = new VarDecl(this->getIdentifier(),Type::errorType);
+  table->insert(this->getIdentifier()->getName(), temp);
+
   return Type::errorType;;
 }
 Type* EqualityCheck(Type* l,Operator *op,Type* r){
