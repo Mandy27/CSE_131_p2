@@ -240,6 +240,14 @@ Type* ArithmeticExpr::Check(SymbolTable *table){
     else if((oper.compare("+")==0||oper.compare("-")==0||oper.compare("/")==0)&&l->IsEquivalentTo(r) &&
         (l->IsEquivalentTo(Type::mat2Type)||l->IsEquivalentTo(Type::mat3Type)||l->IsEquivalentTo(Type::mat4Type)))
 	return l;
+    else if(oper.compare("*")==0&&(((l->IsEquivalentTo(Type::vec2Type)&&r->IsEquivalentTo(Type::mat2Type)))|| 
+          (l->IsEquivalentTo(Type::vec3Type)&& r->IsEquivalentTo(Type::mat3Type)) || 
+	  (l->IsEquivalentTo(Type::vec4Type)&& r->IsEquivalentTo(Type::mat4Type)))) 
+        return l;
+    else if(oper.compare("*")==0&&((r->IsEquivalentTo(Type::vec2Type)&& l->IsEquivalentTo(Type::mat2Type))|| 
+          (r->IsEquivalentTo(Type::vec3Type)&& l->IsEquivalentTo(Type::mat3Type)) || 
+	  (r->IsEquivalentTo(Type::vec4Type)&& l->IsEquivalentTo(Type::mat4Type))))
+	return r;
     else {
       ReportError::IncompatibleOperands(op,l,r);
       return Type::errorType;
