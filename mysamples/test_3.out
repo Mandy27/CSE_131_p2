@@ -1,0 +1,10 @@
+*** Error line 15.
+        b = 5;
+        ^
+*** No declaration found for variable 'b'
+
+
+*** Error line 18.
+           a = 7;
+             ^
+*** Incompatible operands: float = int
