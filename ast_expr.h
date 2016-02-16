@@ -106,6 +106,7 @@ class Operator : public Node
     const char *GetPrintNameForNode() { return "Operator"; }
     void PrintChildren(int indentLevel);
     friend ostream& operator<<(ostream& out, Operator *o) { return out << o->tokenString; }
+    char* getString(){return tokenString;}
  };
  
 class CompoundExpr : public Expr

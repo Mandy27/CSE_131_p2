@@ -165,31 +165,78 @@ Type* VarExpr::Check(SymbolTable *table){
   ReportError::IdentifierNotDeclared(this->getIdentifier(),LookingForVariable);
   return Type::errorType;;
 }
+Type* EqualityCheck(Type* l,Operator *op,Type* r){
+  D("\nLOGICAL EXPR\n");
+  if(l->IsEquivalentTo(r) && (l->IsEquivalentTo(Type::boolType)||l->IsEquivalentTo(Type::intType)
+   ||l->IsEquivalentTo(Type::floatType)||l->IsEquivalentTo(Type::vec2Type)||l->IsEquivalentTo(Type::vec3Type)
+   ||l->IsEquivalentTo(Type::vec4Type)||l->IsEquivalentTo(Type::mat2Type)||l->IsEquivalentTo(Type::mat3Type)
+   ||l->IsEquivalentTo(Type::mat4Type))){
+    return Type::boolType;
+  }else {
+    ReportError::IncompatibleOperands(op,l,r);
+    return Type::errorType;
+  }
+}
+
+Type* LogicalCheck(Type* l,Operator *op,Type* r){
+  D("\nLOGICAL EXPR\n");
+  if(l->IsEquivalentTo(r) && l->IsEquivalentTo(Type::boolType)){
+    return Type::boolType;
+  }else {
+    ReportError::IncompatibleOperands(op,l,r);
+    return Type::errorType;
+  }
+}
+
+
 Type* ArithmeticExpr::Check(SymbolTable *table){
+  Type *l,*r;
+  if(left){
+    l = left->Check(table);
+    if(l->IsEquivalentTo(Type::errorType)) 
+      return Type::errorType;
+  }
+  if(right){
+    r = right->Check(table);
+    if(r->IsEquivalentTo(Type::errorType)) 
+      return Type::errorType;
+    }
+
+  string oper = op->getString();
+  D("\n%s: \n",oper.c_str());
+  if(oper.compare("==")==0||oper.compare("!=")==0){
+    D("\nEQUALITY\n");
+    return EqualityCheck(l,op,r);
+  }else if(oper.compare("||")==0||oper.compare("&&")==0||oper.compare("^^")==0){
+    D("\nLOGICAL\n");
+    return LogicalCheck(l,op,r);
+  }
+
   D("\nARITHMETIC EXPR\n");
   if(left){
-    Type *l = left->Check(table);
-    Type *r = right->Check(table);
+    D("\nUNARY\n");
     if(op ){
-    if(l->IsEquivalentTo(r)&& (l->IsEquivalentTo(Type::intType) ||l->IsEquivalentTo(Type::floatType) ||l->IsEquivalentTo(Type::boolType))) //TODO bool
+    if(l->IsEquivalentTo(r)&& (l->IsEquivalentTo(Type::intType) ||l->IsEquivalentTo(Type::floatType))) //TODO bool
       return l;
     else {
       ReportError::IncompatibleOperands(op,l,r);
-      return NULL;
+      return Type::errorType;
     }
     }
   }else if(right){
+    D("\nUNARYEXPR\n");
     Type *r = right->Check(table);
     if(r->IsEquivalentTo(Type::intType) ||r->IsEquivalentTo(Type::floatType))
       return r;
     else{
       ReportError::IncompatibleOperand(op,r);
-      return NULL;
+      return Type::errorType;
     }
   }else{ //TODO both left and right are NULL
     D("left and right are NULL");
   }
-  return NULL;
+  
+  return Type::errorType;
 }
 Type* RelationalExpr::Check(SymbolTable *table){
   D("RELATIONALEXPR");
@@ -203,22 +250,10 @@ Type* RelationalExpr::Check(SymbolTable *table){
   }
 }
 
-Type* LogicalExpr::Check(SymbolTable *table){
-  D("\nLOGICAL EXPR\n");
-  /*Type* l = left->Check(table);
-  Type* r = right->Check(table);
-  if(l->IsEquivalentTo(r) && (l->IsEquivalentTo(Type::boolType))){
-    return Type::boolType;
-  }else {
-    ReportError::IncompatibleOperands(op,l,r);
-    return Type::errorType;
-  }*/
-  return NULL;
-}
 
 Type* EqualityExpr::Check(SymbolTable *table){
   D("\nEQUALITY EXPR\n");
-  return NULL;
+  return Type::errorType;
 }
 Type* PostfixExpr::Check(SymbolTable *table){
   D("\nPOSTFIXEXPR CHECK\n");
