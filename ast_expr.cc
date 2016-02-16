@@ -159,7 +159,7 @@ Type* VarExpr::Check(SymbolTable *table){
   if(res){
     VarDecl* var = dynamic_cast<VarDecl*>(res);
     if(var) return var->getType();
-    else D("in VarExpr::Check() Error");
+    //else D("in VarExpr::Check() Error");
   }
   
   ReportError::IdentifierNotDeclared(this->getIdentifier(),LookingForVariable);
@@ -340,6 +340,6 @@ Type* FieldAccess::Check(SymbolTable *table){
 
 
 
-  return NULL;
+  return Type::errorType;;
 }
 

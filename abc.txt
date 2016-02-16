@@ -1,16 +1,5 @@
-void main() {
-  vec2 v2;
-  vec3 v3;
-  vec4 v4;
-
-  vec4 v5;
-  v5 = 4.5 * v4;
-
-  mat2 m21;
-  mat2 m22;
-  mat3 m3;
-  mat4 m4;
-  mat2 m5;
-
-  m5 = m21 + m22;
+int x;
+bool x;
+int x () {
+  x = 3;
 }
