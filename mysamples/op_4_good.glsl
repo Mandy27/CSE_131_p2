@@ -9,11 +9,12 @@ void main(){
     float f;
     mat3 m3;
     mat3 result5;
+    vec4 result6;
     
     result1 = m4 * v4;
     result2 = v4 * m4; 
     result3 = v3 + f;
-    result4 = f + vec3;
+    result4 = f + v3;
     result3 = v3 - f;
     result4 = v3 * f;
     result3 = f * v3;
