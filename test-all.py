@@ -28,6 +28,6 @@ for _, _, files in os.walk(TEST_DIRECTORY):
     testName = os.path.join(TEST_DIRECTORY, file)
 
     result = Popen('./glc < ' + testName, shell = True, stderr = STDOUT, stdout = PIPE)
-    result = Popen('diff -w - ' + refName, shell = True, stdin = result.stdout, stdout = PIPE)
+    result = Popen('diff -w  - ' + refName, shell = True, stdin = result.stdout, stdout = PIPE)
     print 'Executing test "%s"' % testName
     print ''.join(result.stdout.readlines())

@@ -91,7 +91,7 @@ Type* StmtBlock::Check(SymbolTable *table){
   }
   
   D("\nend stmtblock check\n");
-  table->print();
+  //table->print();
   D("\nend of one scope\n");
   table->deleteScope();
   return NULL;
