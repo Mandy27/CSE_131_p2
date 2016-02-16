@@ -216,8 +216,30 @@ Type* ArithmeticExpr::Check(SymbolTable *table){
   if(left){
     D("\nUNARY\n");
     if(op ){
-    if(l->IsEquivalentTo(r)&& (l->IsEquivalentTo(Type::intType) ||l->IsEquivalentTo(Type::floatType))) //TODO bool
+    if(l->IsEquivalentTo(r)&& (l->IsEquivalentTo(Type::intType) ||l->IsEquivalentTo(Type::floatType)
+       ||l->IsEquivalentTo(Type::vec2Type)||l->IsEquivalentTo(Type::vec3Type)||l->IsEquivalentTo(Type::vec4Type))) 
       return l;
+    else if(((l->IsEquivalentTo(Type::intType)|| l->IsEquivalentTo(Type::floatType))&&(r->IsEquivalentTo(Type::vec2Type)))
+           ||((r->IsEquivalentTo(Type::intType)|| r->IsEquivalentTo(Type::floatType))&&(l->IsEquivalentTo(Type::vec2Type))))
+      return Type::vec2Type;
+    else if(((l->IsEquivalentTo(Type::intType)|| l->IsEquivalentTo(Type::floatType))&&(r->IsEquivalentTo(Type::vec3Type)))
+           ||((r->IsEquivalentTo(Type::intType)|| r->IsEquivalentTo(Type::floatType))&&(l->IsEquivalentTo(Type::vec3Type))))
+      return Type::vec3Type;
+    else if(((l->IsEquivalentTo(Type::intType)|| l->IsEquivalentTo(Type::floatType))&&(r->IsEquivalentTo(Type::vec4Type)))
+           ||((r->IsEquivalentTo(Type::intType)|| r->IsEquivalentTo(Type::floatType))&&(l->IsEquivalentTo(Type::vec4Type))))
+      return Type::vec4Type;
+    else if(((l->IsEquivalentTo(Type::intType)|| l->IsEquivalentTo(Type::floatType))&&(r->IsEquivalentTo(Type::mat2Type)))
+           ||((r->IsEquivalentTo(Type::intType)|| r->IsEquivalentTo(Type::floatType))&&(l->IsEquivalentTo(Type::mat2Type))))
+      return Type::mat2Type;
+    else if(((l->IsEquivalentTo(Type::intType)|| l->IsEquivalentTo(Type::floatType))&&(r->IsEquivalentTo(Type::mat3Type)))
+           ||((r->IsEquivalentTo(Type::intType)|| r->IsEquivalentTo(Type::floatType))&&(l->IsEquivalentTo(Type::mat3Type))))
+      return Type::mat3Type;
+    else if(((l->IsEquivalentTo(Type::intType)|| l->IsEquivalentTo(Type::floatType))&&(r->IsEquivalentTo(Type::mat4Type)))
+           ||((r->IsEquivalentTo(Type::intType)|| r->IsEquivalentTo(Type::floatType))&&(l->IsEquivalentTo(Type::mat4Type))))
+      return Type::mat4Type;
+    else if((oper.compare("+")==0||oper.compare("-")==0||oper.compare("/")==0)&&l->IsEquivalentTo(r) &&
+        (l->IsEquivalentTo(Type::mat2Type)||l->IsEquivalentTo(Type::mat3Type)||l->IsEquivalentTo(Type::mat4Type)))
+	return l;
     else {
       ReportError::IncompatibleOperands(op,l,r);
       return Type::errorType;
@@ -242,6 +264,9 @@ Type* RelationalExpr::Check(SymbolTable *table){
   D("RELATIONALEXPR");
   Type* l = left->Check(table);
   Type* r = right->Check(table);
+  if(l->IsEquivalentTo(Type::errorType)||r->IsEquivalentTo(Type::errorType))
+    return Type::errorType;
+
   if(l->IsEquivalentTo(r) && (l->IsEquivalentTo(Type::intType) ||  l->IsEquivalentTo(Type::floatType)))
     return Type::boolType;
   else {
