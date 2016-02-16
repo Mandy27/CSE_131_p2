@@ -2,14 +2,13 @@ int f() {
   return 5 * 10 + 4;
 }
 
-string g(int a) {
+float g(int a) {
     if (a == 5) 
-	return "hello";
+	return 5.0;
     else
-	return "world";
+	return 0.0;
 }
 
 void main() {
-  string s;
-  s = g(4 * 5 / 2);
+
 }

@@ -1,7 +1,7 @@
 void main() {
-    int i;
+    int i ;
     i = 0;
-    for (; i <10;) {
+    for (i; i <10;i++) {
         i = i + 1;
     }
 }
