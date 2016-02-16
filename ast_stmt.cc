@@ -142,7 +142,7 @@ Type* IfStmt::Check(SymbolTable *table){
 Type* Case::Check(SymbolTable *table){
   D("\nCASE CHECK\n");
   getStmt()->Check(table);
-  return NULL;
+  return Type::errorType;
 }
 
 
@@ -155,11 +155,12 @@ Type* SwitchStmt::Check(SymbolTable *table){
   }
   if(def)
     def->Check(table);
-  return NULL;
+  return Type::errorType;
 }
 
 Type* Default::Check(SymbolTable *table){
-  return NULL;
+  getStmt()->Check(table); 
+  return Type::errorType;
 }
 
 Type* BreakStmt::Check(SymbolTable *table){
@@ -171,11 +172,11 @@ Type* BreakStmt::Check(SymbolTable *table){
     if(dynamic_cast<WhileStmt*>(temp) || dynamic_cast<Case*>(temp) ||dynamic_cast<SwitchStmt*>(temp)
        ||dynamic_cast<ForStmt*>(temp)|| dynamic_cast<Default*>(temp)){
       D("BREAK STATEMENT");
-      return NULL;
+      return Type::errorType;
   }
   }
   ReportError::BreakOutsideLoop(this);
-  return NULL;
+  return Type::errorType;
 }
 
 Type* ContinueStmt::Check(SymbolTable *table){
@@ -186,11 +187,11 @@ Type* ContinueStmt::Check(SymbolTable *table){
    // temp->Print(1);
     if(dynamic_cast<WhileStmt*>(temp)||dynamic_cast<ForStmt*>(temp)){
       D("Continue STATEMENT");
-      return NULL;
+      return Type::errorType;
   }
   }
   ReportError::ContinueOutsideLoop(this);
-  return NULL;
+  return Type::errorType;
 }
 
 Type* WhileStmt::Check(SymbolTable *table){
@@ -201,7 +202,7 @@ Type* WhileStmt::Check(SymbolTable *table){
     ReportError::TestNotBoolean(getExpr());
   }
   body->Check(table);
-  return NULL;
+  return Type::errorType;
 }
 
 Type* ForStmt::Check(SymbolTable *table){
@@ -214,7 +215,7 @@ Type* ForStmt::Check(SymbolTable *table){
   step->Check(table);
   body->Check(table);
 
-  return NULL;
+  return Type::errorType;
 }
 
 StmtBlock::StmtBlock(List<VarDecl*> *d, List<Stmt*> *s) {
