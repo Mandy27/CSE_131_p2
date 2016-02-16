@@ -3,6 +3,7 @@ void main(){
     vec2 v2;
     mat3 m3;
     int n;
+    mat3 m3;
     m2 + v2; 
     m2 / v2; 
     m2 - v2;
